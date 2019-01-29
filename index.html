@@ -346,10 +346,13 @@
 
   		var iwContent = '<a style="padding: 5px; font:14px/2 sans-serif; text-decoration: underline;" target="_blank" href="' + position.link +'"><strong>' + position.title + '</strong></a>';
 
+  		var infowindow = new daum.maps.InfoWindow({
+            content: iwContent
+        });
+
   		iwContent.open(map, marker);
 
   		map.setCenter(coords);
-
 
   	}
 
