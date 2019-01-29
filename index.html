@@ -310,7 +310,7 @@
 <script src="js/magnific-popup-options.js"></script>
 <!-- Main JS (Do not remove) -->
 <script src="js/main.js?v=20180722"></script>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=42016e0c7ebf5b3129074bb53c84fec2"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=e5b9aa818f8da92ce3c0c4dd60021540"></script>
 <script>
   var container = document.getElementById('map');
   var options = {
@@ -322,40 +322,38 @@
 
   //map.setDraggable(false);
 
-  var positions = [
-    {
-      title: '엘블레스 웨딩홀',
-      latlng: new daum.maps.LatLng(37.4827664558, 127.034950232),
-      link: "http://place.map.daum.net/607282159"
-    },
-    {
-      title: '양재역 전용주차장',
-      latlng: new daum.maps.LatLng(37.4834910628, 127.034281227),
-      link: "http://place.map.daum.net/21361111"
-    }
-  ];
+  // 주소-좌표 변환 객체를 생성합니다
+  var geocoder = new daum.maps.services.Geocoder();
 
-  for (var i = 0; i < positions.length; i ++) {
-
-    // 마커를 생성합니다
-    var marker = new daum.maps.Marker({
-      position: positions[i].latlng
-    });
-
-    marker.setMap(map);
-
-    var iwContent = '<a style="padding: 5px; font:14px/2 sans-serif; text-decoration: underline;" target="_blank" href="' + positions[i].link +'"><strong>' + positions[i].title  + '</strong></a>',
-        iwPosition = positions[i].latlng
+  geocoder.addressSearch('서울 성동구 서울숲2길 32-14', function(result, status) {
 
 
-    var infowindow = new daum.maps.InfoWindow({
-      position: iwPosition, // 마커를 표시할 위치
-      content : iwContent, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-    });
+  	if(status === daum.maps.services.Status.OK) {
 
-    infowindow.open(map, marker);
+  		var coords = new daum.maps.LatLng(result[0].y, result[0].x);
 
-  }
+
+  		var marker = new daum.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+
+  		var position = {
+      		title: '보테가 마지오 G층',
+      		link: "https://place.map.daum.net/133745576"
+    	}
+
+  		var iwContent = '<a style="padding: 5px; font:14px/2 sans-serif; text-decoration: underline;" target="_blank" href="' + positions.link +'"><strong>' + position.title + '</strong></a>';
+
+  		iwContent.open(map, marker);
+
+  		map.setCenter(coords);
+
+
+  	}
+
+  });
 
 </script>
 </body>
